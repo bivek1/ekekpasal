@@ -1,2 +1,4 @@
 media/
 env/
+shop/__pycache__/
+chowk/__pycache__/settings.cpython-38.pyc
