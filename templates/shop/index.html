@@ -180,20 +180,7 @@
                     Please Wait...
                 </button>
         </div>
-        <div class="row">
-            <!-- <div class="col-md-12 col-xs-12">
-                
-                {% if product.has_previous %}
-                <a href="?page={{product.previous_page_number}}">
-                    <button class="btn btn-danger" type="submit">Previous</button>
-                </a>
-                {% endif %}
-
-            </div>
-            <div class="col-md-4 col-xs-4">
-                <h5 class="text-center">Page: {{product.number}} of {{product.paginator.num_pages}}</h5>
-            </div> -->
-           
+        <div class="row"> 
             <div class="col-md-12 col-xs-12">
                 {%if product.has_next%}
                     <a class="infinite-more-link" href="?page={{product.next_page_number}}">

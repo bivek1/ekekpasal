@@ -124,8 +124,18 @@ def productDetails(request, slug, id):
 def shopProduct(request, id):
     shop = Shop.objects.get(id = id)
     product = Product.objects.filter(from_shop = shop)
+    paginator = Paginator(product, 10)
+    page = request.GET.get('page')
+    print(page)
+    try:
+        aa = int(page)
+    except:
+        aa = 1
+    print(type(aa))
+    print(type(page))
+    memData = paginator.page(aa)
     dist = {
-        'product': product,
+        'product': memData,
         's':shop,
         'category':Category.objects.all()
     }
