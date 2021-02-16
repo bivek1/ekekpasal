@@ -1,0 +1,39 @@
+{% extends 'owner/ownerDashboard.html' %}
+{% load static %}
+{% block title %}
+  Manage Your Site
+{% endblock title %}
+{% block header %}
+{%endblock%}
+{% block mainDasboard %}
+            
+  
+<div class="container-fluid">
+    
+    {% if messages %}
+        {%for m in messages%}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Great!</strong> {{m}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        {%endfor%}
+    {% endif %}
+        
+  <div class="row">
+      <div class="col-12 col-md-12">
+        <h4 class="d-inline">Manage site </h4>
+       <hr>
+      </div>
+      <div class="col-12 col-md-12">
+        <h5 class="p-2">Comming Soon.....</h5> 
+      </div>
+      <div class="col-12 col-md-12 ">
+        <small class="p-2">Our Enginner are working for this page. The feature will be available in next update. Thank You</small>
+      </div>
+
+    
+</div>  
+</div>
+{% endblock mainDasboard %}

@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+  View All Category
+{% endblock title %}
+{% block customstyle %}
+<link rel="icon" type="image/png" sizes="16x16" href="{%static 'dashboard/plugins/images/favicon.png'%}">
+
+<link href="{%static 'css/design.css'%}" rel="stylesheet">
+{% endblock customstyle %}
+{% block content %}
+<div class="container-fluid" style="background-color: #edf1f5;">
+    <div class="row">
+        <div class="col-12 col-md-12">
+          <h5 class="p-3">All Category</h5>
+          <hr>
+        </div>
+          
+          {% for c in allcat  %}
+          <div class="col-lg-4 col-xlg-3 col-md-12 col-6">
+              <div class="white-box">
+                  <div class="user-bg"> <img width="100%" alt="user" src="{%if c.image%}{{c.image.url}}{%else%}{%static 'images/posts/5.jpg'%}{%endif%}">
+                      <div class="overlay-box">
+                          <div class="user-content">
+                              <a href="javascript:void(0)"><img src="{%if c.image%}{{c.image.url}}{%else%}{%static 'images/posts/5.jpg'%}{%endif%}" class="thumb-lg img-circle" alt="img"></a>
+                              <h4 class="text-white mt-2">{{c.name}}</h4>
+                              <h5 class="text-white mt-2">Created By: {{c.created_by.email}}</h5>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="user-btm-box mt-5 d-md-flex">
+                      <div class="m-auto text-center">
+                          <h4>{{c.name|capfirst}}</h4>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          {% endfor %}
+  </div>
+    
+  </div>
+{% endblock content %}

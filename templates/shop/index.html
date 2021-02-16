@@ -1,0 +1,177 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+    ekek Pasal| Best Online Shop and Product Store.
+{% endblock title %}    
+
+{% block content %}
+
+<style>
+.makechange{
+    cursor: pointer;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(37, 37, 37, 0.19);
+    
+}
+.makechange:hover{
+    box-shadow: 0 18px 10px 0 rgba(0, 0, 0, 0.2), 0 16px 40px 0 rgba(27, 27, 27, 0.19);
+    transition: all 200ms ease-out;
+}
+.makeShop{
+    height:110px;
+}
+
+.user-bg{
+    margin: 0px;
+}
+.user-bg img {
+
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+    width: inherit;
+    
+}
+.white-box{
+    cursor: pointer;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    
+}
+.white-box:hover{
+    box-shadow: 0 18px 18px 0 rgba(0, 0, 0, 0.2), 0 16px 40px 0 rgba(0, 0, 0, 0.19);
+    transition: all 200ms ease-out;
+}
+.shop-image {
+    height: 150px; 
+    width:100%;
+}
+</style>
+    <section class="section-main bg padding-y-sm">
+        <div class=container>
+            <div class="row">
+                <div class="col-12">
+                    <h5 style="font-family: sans-serif; display: inline;">Namaste!</h5>
+                  
+                </div>
+                {% if user.is_authenticated %}
+                <div class="col-12">
+                    <p style="font-family: sans-serif; display: block;">{{user.first_name}} {{user.last_name}} How are you doing? <b>Have a Great Day</b></p>
+                    
+                </div>
+                {%else%}
+                <div class="col-12">
+                    <p style="font-family: sans-serif; display: block;">Let us know your Name. Please <a href="{%url 'shop:signup'%}"> Sign Up </a></p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        
+    <!-- Shop  -->
+    <section class="section-main bg padding-y-sm">
+        <div class=container>
+            <div class="row">
+                <div class="col-12">
+                    <h5 style="font-family: sans-serif; display:inline-block">View Products From Your Favorite Shop </h5>
+                    <hr>
+                    <div class="row">
+                        {% for s in shop  %}
+                        <div class="col-md-2 col-6 p-2 mb-0">
+                            <a href="{%url 'shop:shopProduct' s.id%}" style="color: black;">
+                                <img class="shop-image" class="m-auto" src="{%if s.image%}{{s.image.url}}{%else%}{%static 'images/posts/5.jpg'%}{%endif%}" alt="" >
+                                <article class="card card-body makechange makeShop">
+                                    <figure class="text-center">
+                                        <figcaption class="p-2">
+                                        <p class="title" style="font-size: 13px;"> <b>{{s.shop_name|capfirst|truncatewords:3}}</b></p>
+                                        <small class="p-0 m-0 d-block">{{s.address|capfirst}}</small> 
+                                        <small class="p-0 m-0">{{s.shop_number}}</small> 
+                                        </figcaption>
+                                    </figure> <!-- iconbox // -->
+                                </article> <!-- panel-lg.// -->
+                            </a>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-12 col-12 text-center">
+                            <a href="{%url 'shop:allShop'%}">
+                                <button class="btn w-50 btn-danger text-center">
+                                    View All Shop
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+  
+    </section>
+    <hr>
+        <div class=container>
+            <div class="row">
+                <div class="col-12">
+                    <h5 style="font-family: sans-serif; display:inline-block">Or Else Shop by Services </h5>
+                    <hr>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                {% for s in service  %}
+                <div class="col-md-3 col-6 p-2">
+                    <a href="{%url 'shop:serviceProduct' s.id%}" style="color: black; text-decoration: none;">
+                    <article class="card card-body makechange">
+                        <figure class="text-center">
+                            <img src="{%if s.image%}{{s.image.url}}{%else%}{%static 'images/posts/5.jpg'%}{%endif%}" alt="" srcset="" style="height:100px; width:100px;">
+                            <figcaption class="pt-4">
+                            <h6 class="title">{{s.service_name}}</h6>
+                            <p>Service Provider- <small>ekek Pasal</small> </p> 
+                            </figcaption>
+                        </figure> <!-- iconbox // -->
+                    </article> <!-- panel-lg.// -->
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+            <br>
+            <hr>
+            <div class="row">
+                <div class="col-md-12 col-12 text-center">
+                    <a href="{%url 'shop:allService'%}">
+                        <button class="btn w-50 btn-danger">
+                            View All Services
+                        </button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class='container'>
+        <hr>
+        <h6 class="mt-2">Products</h6>
+        <hr>
+        <div class="row">   
+        {% for c in product  %}
+        <div class="col-lg-2 col-xlg-2 col-md-3 col-6">
+            <a href="{{c.get_absolute_url}}" style="color: black;">
+                <div class="white-box p-3 mb-3">
+                    <div class="user-bg" style="height: 100px;"> <img class="m-auto" alt="user" src="{%if c.image%}{{c.image.url}}{%else%}{%static 'images/posts/5.jpg'%}{%endif%}">
+                    </div>
+                    <hr>
+                    <figcaption class="info-wrap">
+                        <p class="title text-truncate p-0 m-0">{{c.name|capfirst}}</p>
+                        <small class="text-muted p-0 m-0">Sizes: {{c.size}}</small>
+                        <div class="price mt-1">Rs.{{c.price}}</div> <!-- price-wrap.// -->
+                    </figcaption>
+                  
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+                
+          </div>
+    </div>
+    
+
+{% endblock content %}

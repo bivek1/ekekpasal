@@ -1,0 +1,513 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+{{user.username}} Dashboard/Admin
+{% endblock title %}
+ 
+{% block customstyle %}
+  <link rel="icon" type="image/png" sizes="16x16" href="{%static 'dashboard/plugins/images/favicon.png'%}">
+  <!-- Custom CSS -->
+  <link href="{%static 'dashboard/plugins/bower_components/chartist/dist/chartist.min.css'%}" rel="stylesheet">
+  <link rel="stylesheet" href="{%static 'dashboard/plugins/bower_components/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.css'%}">
+  <!-- Custom CSS -->
+  <link href="{%static 'dashboard/css/style.min.css'%}" rel="stylesheet">
+  <script src="{%static 'dashboard/plugins/bower_components/jquery/dist/jquery.min.js'%}"></script>
+  <!-- Bootstrap tether Core JavaScript -->
+  <script src="{%static 'dashboard/plugins/bower_components/popper.js/dist/umd/popper.min.js'%}"></script>
+  <script src="{%static 'dashboard/bootstrap/dist/js/bootstrap.min.js'%}"></script>
+  <script src="{%static 'dashboard/js/app-style-switcher.js'%}"></script>
+  <script src="{%static 'dashboard/plugins/bower_components/jquery-sparkline/jquery.sparkline.min.js'%}"></script>
+  <!--Wave Effects -->
+  <script src="{%static 'dashboard/js/waves.js'%}"></script>
+  <!--Menu sidebar -->
+  <script src="{%static 'dashboard/js/sidebarmenu.js'%}"></script>
+  <!--Custom JavaScript -->
+  <script src="{%static 'dashboard/js/custom.js'%}"></script>
+  <!--This page JavaScript -->
+  <!--chartis chart-->
+  <script src="{%static 'dashboard/plugins/bower_components/chartist/dist/chartist.min.js'%}"></script>
+  <script src="{%static 'dashboard/plugins/bower_components/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js'%}"></script>
+  <script src="{%static 'dashboard/js/pages/dashboards/dashboard1.js'%}"></script>
+
+  <style>
+    a {
+        text-decoration: none;
+        color: black;
+      }
+    * {
+        padding: 0px;
+    }
+  </style>
+{% endblock customstyle %}
+
+{% block header %}
+{%endblock%}
+{% block content %}
+    <!-- ============================================================== -->
+    <!-- Preloader - style you can find in spinners.css -->
+    <!-- ============================================================== -->
+    <div class="preloader">
+      <div class="lds-ripple">
+          <div class="lds-pos"></div>
+          <div class="lds-pos"></div>
+      </div>
+  </div>
+  <!-- ============================================================== -->
+  <!-- Main wrapper - style you can find in pages.scss -->
+  <!-- ============================================================== -->
+  <div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
+      data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
+      <!-- ============================================================== -->
+      <!-- Topbar header - style you can find in pages.scss -->
+      <!-- ============================================================== -->
+      <header class="topbar" data-navbarbg="skin5">
+          <nav class="navbar top-navbar navbar-expand-md navbar-dark">
+              <div class="navbar-header" data-logobg="skin6">
+                  <!-- ============================================================== -->
+                  <!-- Logo -->
+                  <!-- ============================================================== -->
+                  <a class="navbar-brand" href="{%url 'shop:homepage'%}">
+                      <!-- Logo icon -->
+                  
+                          <!-- Dark Logo icon -->
+                          <a  href = "{%url 'shop:homepage'%}" > 
+                              
+                            ekek<b>Pasal </b>  </a>
+            
+                      <!--End Logo icon -->
+                      <!-- Logo text -->
+                      
+                  </a>
+                  <!-- ============================================================== -->
+                  <!-- End Logo -->
+                  <!-- ============================================================== -->
+                  <!-- ============================================================== -->
+                  <!-- toggle and nav items -->
+                  <!-- ============================================================== -->
+                  <a class="nav-toggler waves-effect waves-light text-dark d-block d-md-none"
+                      href="javascript:void(0)"><i class="ti-menu ti-close"></i></a>
+              </div>
+              <!-- ============================================================== -->
+              <!-- End Logo -->
+              <!-- ============================================================== -->
+              <div class="navbar-collapse collapse" id="navbarSupportedContent" data-navbarbg="skin5">
+                  <ul class="navbar-nav d-none d-md-block d-lg-none">
+                      <li class="nav-item">
+                          <a class="nav-toggler nav-link waves-effect waves-light text-white"
+                              href="javascript:void(0)"><i class="ti-menu ti-close"></i></a>
+                      </li>
+                  </ul>
+                  <!-- ============================================================== -->
+                  <!-- Right side toggle and nav items -->
+                  <!-- ============================================================== -->
+                  <ul class="navbar-nav ml-auto d-flex align-items-center">
+
+                      <!-- ============================================================== -->
+                      <!-- Search -->
+                      <!-- ============================================================== -->
+                      <li class=" in">
+                          <form role="search" class="app-search d-none d-md-block mr-3">
+                              <input type="text" placeholder="Search..." class="form-control mt-0">
+                              <a href="" class="active">
+                                  <i class="fa fa-search"></i>
+                              </a>
+                          </form>
+                      </li>
+                      <!-- ============================================================== -->
+                      <!-- User profile and search -->
+                      <!-- ============================================================== -->
+                      <li>
+                          <a class="profile-pic" href="#">
+                              <img src="{%static 'dashboard/plugins/images/users/varun.jpg'%}" alt="user-img" width="36"
+                                  class="img-circle"><span class="text-white font-medium">{{user.username}}</span></a>
+                      </li>
+                      <!-- ============================================================== -->
+                      <!-- User profile and search -->
+                      <!-- ============================================================== -->
+                  </ul>
+              </div>
+          </nav>
+      </header>
+      <!-- ============================================================== -->
+      <!-- End Topbar header -->
+      <!-- ============================================================== -->
+      <!-- ============================================================== -->
+      <!-- Left Sidebar - style you can find in sidebar.scss  -->
+      <!-- ============================================================== -->
+      <aside class="left-sidebar" data-sidebarbg="skin6" style="height: 75%;">
+          <!-- Sidebar scroll-->
+          <div class="scroll-sidebar">
+              <!-- Sidebar navigation-->
+              <nav class="sidebar-nav">
+                  <ul id="sidebarnav">
+                      <!-- User Profile-->
+
+                      <li class="sidebar-item pt-2">
+                        {%url 'owner:AdminDashboard' as AD%}
+                          <a class="sidebar-link waves-effect waves-dark sidebar-link {%if request.path == AD%} active {%endif%}" href="{%url 'owner:AdminDashboard'%}"
+                              aria-expanded="false">
+                              <i class="far fa-clock" aria-hidden="true"></i>
+                              <span class="hide-menu">Dashboard</span>
+                          </a>
+                      </li>
+                      <li class="sidebar-item">
+                          <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{%url 'owner:yourProfile'%}"
+                              aria-expanded="false">
+                              <i class="fa fa-user" aria-hidden="true"></i>
+                              <span class="hide-menu">Profile</span>
+                          </a>
+                      </li>
+                      {%url 'staff:yourShop' as AD%}
+                      <li class="sidebar-item">
+                          <a class="sidebar-link waves-effect waves-dark sidebar-link {%if request.path == AD%} active {%endif%}" href="{%url 'staff:yourShop'%}"
+                              aria-expanded="false">
+                              <i class="fa fa-table" aria-hidden="true"></i>
+                              <span class="hide-menu">Manage Shop</span>
+                          </a>
+                      </li>
+                      {%url 'owner:manageService' as AD%}
+                      <li class="sidebar-item">
+                          <a class="sidebar-link waves-effect waves-dark sidebar-link  {%if request.path == AD%} active {%endif%}" href="{%url 'owner:manageService'%}"
+                              aria-expanded="false">
+                              <i class="fa fa-font" aria-hidden="true"></i>
+                              <span class="hide-menu">Manage Service</span>
+                          </a>
+                      </li>
+                      {%url 'owner:sellerList' as AD%}
+                      <li class="sidebar-item">
+                          <a class="sidebar-link waves-effect waves-dark sidebar-link {%if request.path == AD%} active {%endif%}" href="{%url 'owner:sellerList'%}"
+                              aria-expanded="false">
+                              <i class="fa fa-globe" aria-hidden="true"></i>
+                              <span class="hide-menu">Manage Seller</span>
+                          </a>
+                      </li>
+                      <li class="sidebar-item">
+                          <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{%url 'staff:yourProduct'%}"
+                              aria-expanded="false">
+                              <i class="fa fa-columns" aria-hidden="true"></i>
+                              <span class="hide-menu">Manage Product</span>
+                          </a>
+                      </li>
+                      {%url 'staff:viewYourCategory' as AD%}
+                      <li class="sidebar-item">
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link {%if request.path == AD%} active {%endif%}" href="{%url 'staff:viewYourCategory'%}"
+                            aria-expanded="false">
+                            <i class="fa fas fa-list-ul" aria-hidden="true"></i>
+                            <span class="hide-menu">Category/SubCategroy </span>
+                        </a>
+                    </li>
+                      <li class="sidebar-item">
+                          <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{%url 'owner:manageSite'%}"
+                              aria-expanded="false">
+                              <i class="fa fa-info-circle" aria-hidden="true"></i>
+                              <span class="hide-menu">Manage this site </span>
+                          </a>
+                      </li>
+                      <li class="sidebar-item">
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{%url 'alluse:changePassword'%}"
+                            aria-expanded="false">
+                            <i class="fa fa-key" aria-hidden="true"></i>
+                            <span class="hide-menu">Change Password </span>
+                        </a>
+                    </li>
+
+                      <hr>
+                      
+                      {% if user.is_authenticated %}
+                      <li class="text-center p-20 upgrade-btn">
+                        <a href="{%url 'shop:logout'%}"
+                            class="btn btn-secondary text-white m-auto">
+                            <i class="fa fa-sign-out-alt"></i>
+                            Logout</a>
+                      </li>
+                      {% endif %}
+                        
+                     
+                  </ul>
+
+              </nav>
+              <!-- End Sidebar navigation -->
+          </div>
+          <!-- End Sidebar scroll-->
+      </aside>
+      <!-- ============================================================== -->
+      <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+      <!-- ============================================================== -->
+      <!-- ============================================================== -->
+      <!-- Page wrapper  -->
+      <!-- ============================================================== -->
+      <div class="page-wrapper">
+          <!-- ============================================================== -->
+          <!-- Bread crumb and right sidebar toggle -->
+          <!-- ============================================================== -->
+          <div class="page-breadcrumb bg-white">
+              <div class="row align-items-center">
+                  <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                      <h4 class="page-title text-uppercase font-medium font-14">Dashboard</h4>
+                  </div>
+                  <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+                      <div class="d-md-flex">
+                          <ol class="breadcrumb ml-auto">
+                              
+                          </ol>
+                          <a href="{%url 'shop:homepage'%}" target="_blank"
+                              class="btn btn-danger  d-none d-md-block pull-right m-l-20 hidden-xs hidden-sm waves-effect waves-light">View As Customer</a>
+                      </div>
+                  </div>
+              </div>
+              <!-- /.col-lg-12 -->
+          </div>
+          <!-- ============================================================== -->
+          <!-- End Bread crumb and right sidebar toggle -->
+          <!-- ============================================================== -->
+          <!-- ============================================================== -->
+          <!-- Container fluid  -->
+          <!-- ============================================================== -->
+          {% block mainDasboard %}
+            
+  
+          <div class="container-fluid">
+
+             <!-- RECENT SALES -->
+              <!-- ============================================================== -->
+              <div class="row">
+                <div class="col-md-12 col-12 col-lg-12">
+                    <h6>Total Site Vist - {{visit}}</h6>
+                </div>
+                <div class="col-md-12 col-lg-12 col-sm-12">
+                    <div class="white-box">
+                        <div class="d-md-flex mb-3">
+                            <h3 class="box-title mb-0">Recent Order</h3>
+                            <div class="col-md-3 col-sm-4 col-xs-6 ml-auto">
+                                <select class="form-control row border-top">
+                                    <option>{{time}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        {% if order %}
+                        <div class="table-responsive">
+                            <table class="table no-wrap">
+                                <thead>
+                                    <tr>
+                                        <th class="border-top-0">ID</th>
+                                        <th class="border-top-0">Customer Name</th>
+                                        <th class="border-top-0">Number</th>
+                                        <th class="border-top-0">Quantity</th>
+                                        <th class="border-top-0">Total Price</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td class="txt-oflo">Elite admin</td>
+                                        <td>SALE</td>
+                                        <td class="txt-oflo">April 18, 2017</td>
+                                        <td><span class="text-success">$24</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        {%else%}
+                        <h4>Comming Soon.....</h4>
+                        {% endif %}
+                            
+                        
+                    </div>
+                </div>
+            </div>
+            <!-- ============================================================== -->
+              <!-- ============================================================== -->
+              <!-- Three charts -->
+              <!-- ============================================================== -->
+              <div class="row justify-content-center">
+                  
+                  <div class="col-lg-4 col-sm-6 col-xs-12">
+                    <a href="{%url 'owner:addSeller'%}">
+                   
+                      <div class="white-box analytics-info">
+                          <h3 class="box-title">Add Seller</h3>
+                          <ul class="list-inline two-part d-flex align-items-center mb-0">
+                              <li>
+                                  <i class="fas fa-users text-success" style="font-size: 30px;">
+
+                                  </i>
+                                 
+                              </li>
+                              <li class="ml-auto"><span class="counter text-success">Total - {{st}}</span></li>
+                          </ul>
+                      </div>
+                    </a>
+                  </div>
+                  <div class="col-lg-4 col-sm-6 col-xs-12">
+                      <a href="{%url 'owner:addService'%}">
+                        <div class="white-box analytics-info">
+                            <h3 class="box-title">Add Service</h3>
+                            <ul class="list-inline two-part d-flex align-items-center mb-0">
+                                <li>
+                                  <i class=" fas fa-truck-moving text-purple" style="font-size: 30px;">
+  
+                                  </i>
+                                </li>
+                                <li class="ml-auto"><span class="counter text-purple">Total- {{set}}</span></li>
+                            </ul>
+                        </div>
+                      </a>
+                      
+                  </div>
+                  <div class="col-lg-4 col-sm-6 col-xs-12">
+                      <a href="{%url 'staff:addShop'%}">
+                      <div class="white-box analytics-info">
+                          <h3 class="box-title">Add Shop</h3>
+                          <ul class="list-inline two-part d-flex align-items-center mb-0">
+                              <li>
+                                <i class="fas fa-shopping-cart text-info" style="font-size: 30px;">
+
+                                </i>
+                              </li>
+                              <li class="ml-auto"><span class="counter text-info">Total- {{sh}}</span>
+                              </li>
+                          </ul>
+                      </div>
+                    </a>
+                  </div>
+                  <div class="col-lg-4 col-sm-6 col-xs-12">
+                      <a href="{%url 'staff:addCategory'%}">
+                        <div class="white-box analytics-info">
+                            <h3 class="box-title">Add Category</h3>
+                            <ul class="list-inline two-part d-flex align-items-center mb-0">
+                                <li>
+                                    <i class="fas fa-th-large text-secondary" style="font-size: 30px;">
+
+                                    </i>
+                                </li>
+                                <li class="ml-auto"><span class="counter text-secondary">Total- {{cat}}</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </a>
+                    
+                </div>
+                <div class="col-lg-4 col-sm-6 col-xs-12">
+                    <a href="{%url 'staff:addSubCategory'%}">
+                    
+                    <div class="white-box analytics-info">
+                        <h3 class="box-title">Add Sub-Category</h3>
+                        <ul class="list-inline two-part d-flex align-items-center mb-0">
+                            <li>
+                                <i class="fas fa-th text-orange" style="font-size: 30px;">
+
+                                </i>
+                            </li>
+                            <li class="ml-auto"><span class="counter text-orange">Total- {{sub}}</span>
+                            </li>
+                        </ul>
+                    </div>
+                </a>
+                </div>
+                <div class="col-lg-4 col-sm-6 col-xs-12">
+                    <a href="{%url 'staff:addProduct'%}">
+
+                    <div class="white-box analytics-info">
+                        <h3 class="box-title">Add Product</h3>
+                        <ul class="list-inline two-part d-flex align-items-center mb-0">
+                            <li>
+                                <i class="fas fa-plus text-danger" style="font-size: 30px;">
+
+                                </i>
+                            </li>
+                            <li class="ml-auto"><span class="counter text-danger">Total- {{pt}}</span>
+                            </li>
+                        </ul>
+                    </div>
+                </a>
+                </div>
+                  
+              </div>
+              <!-- Recent Comments -->
+              <!-- ============================================================== -->
+              
+              {% if comment %}
+              <div class="row">
+                <!-- .col -->
+                <div class="col-md-12 col-lg-8 col-sm-12">
+                    <div class="white-box">
+                        <h3 class="box-title mb-0">Recent Comments</h3>
+                        <div class="comment-center">
+                            <div class="comment-body d-flex">
+                                <div class="user-img"> <img src="{%static 'dashboard/plugins/images/users/pawandeep.jpg'%}" alt="user"
+                                        class="img-circle">
+                                </div>
+                                <div class="mail-contnet">
+                                    <h5>Pavan kumar</h5><span class="time">10:20 AM 20 may 2016</span>
+                                    <br>
+                                    <div class="mb-3 mt-3">
+                                        <span class="mail-desc">Donec ac condimentum massa. Etiam pellentesque
+                                            pretium lacus. Phasellus ultricies dictum suscipit. Aenean commodo dui
+                                            pellentesque molestie feugiat. Aenean commodo dui </span>
+                                    </div>
+                                    <a href="javacript:void(0)"
+                                        class="btn btn btn-rounded btn-default btn-outline mb-2 mb-md-0 m-r-5"><i
+                                            class="ti-check text-success m-r-5"></i>Approve</a><a
+                                        href="javacript:void(0)" class="btn-rounded btn btn-default btn-outline"><i
+                                            class="ti-close text-danger m-r-5"></i>
+                                        Reject</a>
+                                </div>
+                            </div>
+                         
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-12 col-sm-12">
+                    <div class="card">
+                        <div class="card-heading">
+                            CHAT LISTING
+                        </div>
+                        <div class="card-body">
+                            <ul class="chatonline">
+                                <li>
+                                    <div class="call-chat">
+                                        <button class="btn btn-success text-white btn-circle btn" type="button">
+                                            <i class="fas fa-phone"></i>
+                                        </button>
+                                        <button class="btn btn-info btn-circle btn" type="button">
+                                            <i class="far fa-comments"></i>
+                                        </button>
+                                    </div>
+                                    <a href="javascript:void(0)" class="d-flex align-items-center"><img
+                                            src="{%static 'dashboard/plugins/images/users/varun.jpg'%}" alt="user-img" class="img-circle">
+                                        <div class="ml-2">
+                                            <span class="text-dark text-muted">Varun Dhavan <small
+                                                    class="d-block text-success d-block">online</small></span>
+                                        </div>
+                                    </a>
+                                </li>
+ 
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.col -->
+            </div>
+              {% endif %}
+                  
+             
+          </div>
+          {% endblock mainDasboard %}
+          <!-- ============================================================== -->
+          <!-- End Container fluid  -->
+          <!-- ============================================================== -->
+          <!-- ============================================================== -->
+          <!-- footer -->
+          <!-- ============================================================== -->
+         
+          <!-- ============================================================== -->
+          <!-- End footer -->
+          <!-- ============================================================== -->
+      </div>
+      <!-- ============================================================== -->
+      <!-- End Page wrapper  -->
+      <!-- ============================================================== -->
+  </div> 
+  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+{% endblock content %}

@@ -1,0 +1,50 @@
+
+{% extends 'owner/ownerDashboard.html' %}
+{% block title %}
+  Add Service
+{% endblock title %}
+{% block header %}
+{%endblock%}
+{% block mainDasboard %}
+            
+  
+<div class="container-fluid">
+  {% if messages %}
+    {%for m in messages%}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+      <strong>Somethings went wrong!</strong> {{m}}
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    {%endfor%}
+  {% endif %}
+  <div class="row">
+    <div class="col-md-12">
+        <div class="white-box">
+          <h4>Add Service</h4>
+          <small>
+            Add Service to your store
+          </small>
+          
+          <form action="" method="post" enctype="multipart/form-data">
+            <div class="form-group mt-3">
+              {{form.service_name.label_tag}}
+              {{form.service_name}}
+              {{form.service_name.errors}}
+              <br>
+              {{form.image.label_tag}}
+              {{form.image}}
+              {{form.image.errors}}
+              {% csrf_token %}
+              <br>
+              <input class="btn btn-outline-dark " type="submit" value="Add Service">
+              
+            </div>
+          </form>
+        </div>
+    </div>
+</div>
+  
+</div>
+{% endblock mainDasboard %}

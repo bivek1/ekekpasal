@@ -1,0 +1,74 @@
+
+{% extends base %}
+
+{% load static %}
+{% block title %}
+  View Your Shop List
+{% endblock title %}
+{% block header %}
+{%endblock%}
+{% block mainDasboard %}
+            
+
+<style>
+.user-bg{
+    margin: 0px;
+}
+.user-bg img {
+
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+    width: inherit;
+    
+}
+.white-box{
+    cursor: pointer;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    
+}
+.white-box:hover{
+    box-shadow: 0 18px 18px 0 rgba(0, 0, 0, 0.2), 0 16px 40px 0 rgba(0, 0, 0, 0.19);
+    transition: all 200ms ease-out;
+}
+</style>
+<div class="container-fluid">
+    
+    {% if messages %}
+        {%for m in messages%}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Great!</strong> {{m}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        {%endfor%}
+    {% endif %}
+        
+  <div class="row">
+      <div class="col-12 col-md-12">
+        <h4 class="d-inline">View Product added by You</h4>
+        <a href="{%url 'shop:allProduct'%}" class="btn btn-outline-dark float-right">View Entire Product</a>
+        <hr>
+      </div>
+        
+        {% for c in product  %}
+        <div class="col-lg-2 col-xlg-2 col-md-3 col-6">
+          <a href="{{c.get_absolute_url}}">
+            <div class="white-box">
+                <div class="user-bg" style="height: 100px;"> <img class="m-auto" alt="user" src="{%if c.image%}{{c.image.url}}{%else%}{%static 'images/posts/5.jpg'%}{%endif%}">
+                </div>
+                <hr>
+                <figcaption class="info-wrap">
+                    <p class="title text-truncate p-0 m-0">{{c.name|capfirst}}</p>
+                    <small class="text-muted p-0 m-0">Sizes: {{c.size|upper }}</small>
+                    <div class="price mt-1">Rs.{{c.price}}</div> <!-- price-wrap.// -->
+                </figcaption>
+              
+            </div>
+          </a>
+        </div>
+        {% endfor %}
+  </div>  
+</div>
+{% endblock mainDasboard %}

@@ -1,0 +1,47 @@
+
+{% extends base %}
+{% block title %}
+  Add Sub Category
+{% endblock title %}
+{% block header %}
+{%endblock%}
+{% block mainDasboard %}
+            
+  
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+        <div class="white-box">
+          <h4>Add Sub Category</h4>
+          <small>
+            Add sub category to your store
+          </small>
+          
+          <form action="" method="post" enctype="multipart/form-data">
+            <div class="row mt-3">
+              <div class="col-md-6 col-12">
+                {{form.sub_name.label_tag}}
+                {{form.sub_name}}
+                {{form.sub_name.errors}}
+              </div>
+              <div class="col-md-6 col-12">
+                {{form.category.label_tag}}
+                {{form.category}}
+                {{form.category.errors}}
+              </div>
+              <div class="col-12 mt-2">
+                {{form.image.label_tag}}
+                {{form.image}}
+                {{form.image.errors}}
+              </div>
+            </div>
+            <br>
+            {% csrf_token %}
+            <input class="btn btn-outline-dark" type="submit" value="Add Sub Category">
+          </form>
+        </div>
+    </div>
+</div>
+  
+</div>
+{% endblock mainDasboard %}

@@ -1,0 +1,168 @@
+
+{% extends base %}
+{% block title %}
+  Add Product
+{% endblock title %}
+{% block header %}
+{%endblock%}
+{% block mainDasboard %}
+            
+  
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+        <div class="white-box">
+          <h4>Add Product</h4>
+          <small>
+            Add Product to your store
+          </small>
+          
+          <form action="" method="post" enctype="multipart/form-data">
+            {{form.media}}
+            <div class="row">
+                <div class="col-md-12 col-12">
+                    <div class="form-row p-2" style="background-color: white;">
+                        <div class="form-group col-md-6 col-12">
+                            {{form.name.label_tag}}
+                            {{form.name}}
+                            {{form.name.errors}}
+                        </div>
+                        <div class="form-group col-md-3 col-12">
+                            {{form.category.label_tag}}
+                            {{form.category}}
+                            {{form.category.errors}}
+                        </div>
+                        <div class="form-group col-md-3 col-12">
+                            {{form.sub_category.label_tag}}
+                            {{form.sub_category}}
+                            {{form.sub_category.errors}}
+                        </div>
+                        <div class="form-group col-md-3 col-6">
+                            {{form.service.label_tag}}
+                            {{form.service}}
+                            {{form.service.errors}}
+                        </div>
+                        <div class="form-group col-md-3 col-6">
+                            {{form.price.label_tag}}
+                            {{form.price}}
+                            {{form.price.errors}}
+                        </div>
+                        <div class="form-group col-md-6 col-12">
+                            {{form.short.label_tag}}
+                            {{form.short}}
+                            {{form.short.errors}}
+                        </div>
+                      
+                        <div class="form-group col-md-3 col-12">
+                            {{form.discount.label_tag}}
+                            {{form.discount}}
+                            {{form.discount.errors}}
+                        </div>
+
+                        <div class="form-group col-md-3 col-12">
+                            {{form.available_quantity.label_tag}}
+                            {{form.available_quantity}}
+                            {{form.available_quantity.errors}}
+                        </div>     
+                          
+                        <div class="form-group col-md-3 col-12">
+                            {{form.from_shop.label_tag}}
+                            {{form.from_shop}}
+                            {{form.from_shop.errors}}
+                        </div>     
+                        <div class="form-group col-md-3 col-12">
+                            {{form.sale.label_tag}}
+                            {{form.sale}}
+                            {{form.sale.errors}}
+                        </div>
+                        <div class="form-group col-md-8 col-12">
+                            {{form.tags.label_tag}}
+                            {{form.tags}}
+                            {{form.tags.errors}}
+                        </div>
+                        <div class="form-group col-md-4 col-12">
+                            {{form.size.label_tag}}
+                            {{form.size}}
+                            {{form.size.errors}}
+                        </div>
+                        <div class="form-check col-md-3 col-12 text-center">
+                            {{form.cashpayment}}
+                            <label class="form-check-label" for="exampleCheck1">{{form.cashpayment.label_tag}}</label>
+                        </div>
+                        <div class="form-check col-md-3 col-12 text-center">
+                            {{form.features}}
+                            <label class="form-check-label" for="exampleCheck1">{{form.features.label_tag}}</label>
+                        </div>
+                        <div class="form-check col-md-3 col-12 text-center">
+                            {{form.sponsor}}
+                            <label class="form-check-label" for="exampleCheck1">{{form.sponsor.label_tag}}</label>
+                        </div>
+                        <div class="form-check col-md-3 col-12 text-center">
+                            {{form.allovernepal}}
+                            <label class="form-check-label" for="exampleCheck1">{{form.allovernepal.label_tag}}</label>
+                        </div>
+                        <div class="form-group col-md-12 col-12">
+                            {{form.image.label_tag}}
+                            {{form.image}}
+                            {{form.image.errors}}
+                        </div>
+                        <p>Details Description</p>
+                        <div class="form-group col-md-12 col-12">
+                            {{form.description}}
+                            {{form.description.errors}}
+                        </div>
+                        
+                        <div class= "form-control" style ="display: inline-table;">
+                            <label for="file" style ="display: block;">Extra Pictures of the Products</label> <br>
+                            <div id="images" style ="display: inline-table;">
+                              <input type="file"  accept="image/*" name="file[]">
+                            </div>
+                            
+                            <button type="button" name="add_image" id="add_image" style=" background-color: #4CAF50; /* Green */
+                            border: none;
+                            color: white;
+                            padding: 15px 25px;
+                            text-align: center;
+                            text-decoration: none;
+                            display: inline-block;
+                            font-size: 16px;"> <i class="fa fa-plus"></i> </button>
+                        </div>
+                          
+                        </div>
+                        {% csrf_token %}
+                        <button class="btn btn-primary col-6 m-auto" type="submit">
+                            Add Product
+                        </button>
+                    </div>
+    
+            </div>
+            </div>
+          </form> 
+        </div>
+    </div>
+</div>
+  
+</div>
+<script>
+
+    document.getElementById("add_image").onclick = function (ev){
+     
+      var image = document.getElementById("images");
+      var newInput = document.createElement("input");
+      newInput.type = "file"
+      newInput.name = "file[]"
+      image.appendChild(newInput);
+    }
+    // function showPreview(event){
+    // if(event.target.files.length > 0){
+    //     var src = URL.createObjectURL(event.target.files[0])
+    //     var preview = document.getElementById("file-ip-1-preview"+count);
+    //     preview.src = src;
+    //     preview.style.display = "inline-block";
+    // }
+    // }
+</script>
+<script>
+    
+</script>
+{% endblock mainDasboard %}

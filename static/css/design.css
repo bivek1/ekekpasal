@@ -1,0 +1,36 @@
+.white-box {
+    background: #fff;
+    padding: 25px;
+    margin-bottom: 30px;
+}
+.user-bg {
+    margin: -25px;
+    height: 230px;
+    overflow: hidden;
+    position: relative;
+}
+.user-bg .overlay-box {
+    background: #707cd2;
+    opacity: .9;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    text-align: center;
+}
+.user-bg .overlay-box .user-content {
+    padding: 15px;
+    margin-top: 30px;
+}
+.user-bg .overlay-box .user-content .thumb-lg {
+    height: 88px;
+    width: 88px;
+    border-radius: 50%;
+}
+.user-bg .overlay-box .user-content .text-white {
+    font-weight: 300;
+}
+.user-bg .overlay-box .user-content h5 {
+    font-size: 14px;
+}

@@ -1,0 +1,96 @@
+
+{% extends base %}
+{% load static %}
+{% block title %}
+  View Your Category
+{% endblock title %}
+{% block header %}
+{%endblock%}
+{% block mainDasboard %}
+            
+  
+<div class="container-fluid">
+    
+    {% if messages %}
+        {%for m in messages%}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Great!</strong> {{m}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        {%endfor%}
+    {% endif %}
+        
+  <div class="row">
+      <div class="col-12 col-md-12">
+        <h4 class="d-inline">View Category added by You</h4>
+        <a href="{%url 'shop:allCategory'%}" class="btn btn-outline-dark float-right">View All Category</a>
+        <hr>
+      </div>
+        
+        {% for c in yourCat  %}
+        <div class="col-lg-4 col-xlg-3 col-md-12 col-6">
+            <a href="{%url 'shop:categoryProduct' c.id%}">
+            <div class="white-box">
+                <a href="{%url 'shop:categoryProduct' c.id%}">
+                <div class="user-bg"> <img width="100%" alt="user" src="{%if c.image%}{{c.image.url}}{%else%}{%static 'images/posts/5.jpg'%}{%endif%}">
+                    <div class="overlay-box">
+                        <div class="user-content">
+                            <a href="javascript:void(0)"><img src="{%if c.image%}{{c.image.url}}{%else%}{%static 'images/posts/5.jpg'%}{%endif%}" class="thumb-lg img-circle" alt="img"></a>
+                            <h4 class="text-white mt-2">{{c.name}}</h4>
+                            <h5 class="text-white mt-2">Created By: {{c.created_by.email}}</h5>
+                        </div>
+                    </div>
+                </div>
+                </a>
+                <a href="{%url 'shop:categoryProduct' c.id%}">
+                <div class="user-btm-box mt-5 d-md-flex">
+                    <div class="m-auto text-center">
+                        <h4>{{c.name|capfirst}}</h4>
+                    </div>
+                </div>
+                </a>
+            </div>
+            </a>
+        </div>
+        {% endfor %}
+            
+        
+
+</div>
+
+<div class="row">
+    <div class="col-12 col-md-12">
+      <h4 class="d-inline">View Sub - Category added by You</h4>
+      <a href="{%url 'shop:allCategory'%}" class="btn btn-outline-dark float-right">View All Sub Category</a>
+      <hr>
+    </div>
+      
+      {% for c in subCat  %}
+      <div class="col-lg-4 col-xlg-3 col-md-12 col-6">
+          <div class="white-box">
+              <div class="user-bg"> <img width="100%" alt="user" src="{%if c.image%}{{c.image.url}}{%else%}{%static 'images/posts/5.jpg'%}{%endif%}">
+                  <div class="overlay-box">
+                      <div class="user-content">
+                          <a href="javascript:void(0)"><img src="{%if c.image%}{{c.image.url}}{%else%}{%static 'images/posts/5.jpg'%}{%endif%}" class="thumb-lg img-circle" alt="img"></a>
+                          <h4 class="text-white mt-2">{{c.sub_name}}</h4>
+                          <h5 class="text-white mt-2">Created By: {{c.created_by.email}}</h5>
+                      </div>
+                  </div>
+              </div>
+              <div class="user-btm-box mt-5 d-md-flex">
+                  <div class="m-auto text-center">
+                      <h4>{{c.name|capfirst}}</h4>
+                  </div>
+              </div>
+          </div>
+      </div>
+      {% endfor %}
+          
+      
+
+</div>
+  
+</div>
+{% endblock mainDasboard %}

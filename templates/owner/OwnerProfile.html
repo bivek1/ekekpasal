@@ -1,0 +1,73 @@
+
+
+{% extends 'owner/ownerDashboard.html' %}
+{% block title %}
+  View Your Shop List
+{% endblock title %}
+{% block header %}
+{%endblock%}
+{% block mainDasboard %}
+
+<div class="container-fluid">
+    {% if messages %}
+        {%for m in messages%}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+             {{m}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {%endfor%}
+    {% endif %}
+    
+<div class="row">
+   
+    <div class="col-lg-12 col-xlg-12 col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <form class="form-horizontal form-material" method="POST">
+                    <div class="form-group mb-4">
+                        <label for="example-email" class="col-md-12 p-0 m-0">Name</label>
+                        <div class="row p-3">
+                            <div class="col-md-6 border-bottom p-0">
+                                {{form.first_name}}
+                                {{form.first_name.errors}}
+                            </div>
+                            <div class="col-md-6 border-bottom p-0">
+                                {{form.last_name}}
+                                {{form.last_name.errors}}
+                            </div>
+                        </div>     
+                    </div>
+                    <div class="form-group mb-4">
+                        <label for="example-email" class="col-md-12 p-0">{{form.email.label_tag}}</label>
+                        <div class="col-md-12 border-bottom p-0">
+                            {{form.email}}
+                            {{form.email.errors}}
+                        </div>
+                    </div>
+                   
+                    <div class="form-group mb-4">
+                        <label for="example-email" class="col-md-12 p-0">{{form.address.label_tag}}</label>
+                        <div class="col-md-12 border-bottom p-0">
+                            {{form.address}}
+                            {{form.address.errors}}
+                        </div>
+                    </div>
+                   {% csrf_token %}
+                    <div class="form-group mb-4">
+                        <div class="col-sm-12">
+                            <button class="btn btn-success">Update Profile</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Column -->
+</div>
+
+</div>
+  
+{% endblock mainDasboard %}
+

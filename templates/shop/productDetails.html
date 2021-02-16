@@ -1,0 +1,223 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+  {{p.name}}
+{% endblock title %}
+{% block customstyle %}
+
+{% endblock customstyle %}
+
+{% block content %}
+<style>    
+    .user-bg{
+        margin: 0px;
+    }
+    .user-bg img {
+    
+        max-width: 100%;
+        max-height: 100%;
+        display: block;
+        width: inherit;
+        
+    }
+    .white-box{
+        cursor: pointer;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        
+    }
+    .white-box:hover{
+        box-shadow: 0 18px 18px 0 rgba(0, 0, 0, 0.2), 0 16px 40px 0 rgba(0, 0, 0, 0.19);
+        transition: all 200ms ease-out;
+    }
+    #changeImage{
+        max-width: 100%;
+        max-height: 100%;
+        display: block;
+        width: inherit;
+        height: initial; 
+    }
+    
+    </style>
+<div class="container-fluid">
+    <br>
+    <div class="row p-2">
+        <div class="col-xl-9 col-md-8 col-sm-12">
+        <main class="card">
+            <div class="row no-gutters">
+                <aside class="col-sm-6 border-right">
+        <article class="gallery-wrap"> 
+        <div  class="img-big-wrap">
+          <div style="text-align:center;"> <img id="changeImage"  src="{{p.image.url}}"></div>
+        </div> <!-- slider-product.// -->
+        <div class="img-small-wrap">
+            
+            {% for image in p.product_image.all  %}
+            <div class="item-gallery"> <img id = "changeThumb" src="{{image.image.url}}" onclick="changeImg(this);"></div>
+            {% endfor %}
+                
+        
+        </div> <!-- slider-nav.// -->
+        </article> <!-- gallery-wrap .end// -->
+                </aside>
+                <aside class="col-sm-6">
+        <article class="card-body">
+        <!-- short-info-wrap -->
+            <div class="badge badge-secondary badge-pill">
+                {{p.category}}
+            </div>
+            <h3 class="title mb-3">{{p.name|capfirst}}</h3>
+        
+        <div class="mb-3"> 
+            <var class="price h3 text-dark"> 
+                <span class="currency">Rs.</span><span class="num">{{p.price}}</span>
+            </var> 
+            
+        </div> <!-- price-detail-wrap .// -->
+        <dl>
+          <dt>Short Description</dt>
+          <dd><p>{{p.short}}</p></dd>
+        </dl>
+        <dl class="row">
+          <dt class="col-sm-6">Available Quantity</dt>
+          <dd class="col-sm-6">{{p.available_quantity}}</dd>
+        
+          <dt class="col-sm-6">Sale </dt>
+          <dd class="col-sm-6">{{p.sale}}</dd>
+        
+        {% if p.sponsor %}
+        <dt class="col-sm-6">Sponsor</dt>
+        <dd class="col-sm-6"><i class="fa fa-check-circle"></i> </dd>
+        {% endif %}
+
+        {% if p.cashpayment %}
+        <dt class="col-sm-6">Cash Payment</dt>
+        <dd class="col-sm-6"><i class="fa fa-check-circle"></i> </dd>
+        {% endif %}
+        
+        {% if p.allovernepal %}
+        <dt class="col-sm-6">Deliver</dt>
+        <dd class="col-sm-6"> All over Nepal<i class="fa fa-check-circle"></i> </dd>
+        {% endif %}
+        </dl>
+        <div class="rating-wrap">
+        
+            <ul class="rating-stars">
+                <li style="width:80%" class="stars-active"> 
+                    <i class="fa fa-star"></i> <i class="fa fa-star"></i> 
+                    <i class="fa fa-star"></i> <i class="fa fa-star"></i> 
+                    <i class="fa fa-star"></i> 
+                </li>
+                <li>
+                    <i class="fa fa-star"></i> <i class="fa fa-star"></i> 
+                    <i class="fa fa-star"></i> <i class="fa fa-star"></i> 
+                    <i class="fa fa-star"></i> 
+                </li>
+            </ul>
+            <!-- <div class="label-rating">132 reviews</div>
+            <div class="label-rating">154 orders </div> -->
+        </div> <!-- rating-wrap.// -->
+        <hr>
+            <div class="row">
+                <div class="col-sm-5">
+                    <dl class="dlist-inline">
+                      <dt>Quantity: </dt>
+                      <dd> 
+                          <select class="form-control form-control-sm" style="width:70px;">
+                              <option> 1 </option>
+                              <option> 2 </option>
+                              <option> 3 </option>
+                          </select>
+                      </dd>
+                    </dl>  <!-- item-property .// -->
+                </div> <!-- col.// -->
+             
+            </div> <!-- row.// -->
+            <hr>
+            <a href="#" class="btn  btn-outline-dark"> <i class="fa fa-envelope"></i> Contact Supplier </a>
+            <a href="#" class="btn  btn-outline-warning"> Start Order </a>
+        <!-- short-info-wrap .// -->
+        </article> <!-- card-body.// -->
+                </aside> <!-- col.// -->
+            </div> <!-- row.// -->
+        </main> <!-- card.// -->
+        
+        <!-- PRODUCT DETAIL -->
+        <article class="card mt-3">
+            <div class="card-body">
+                <h4>Detail overview</h4>
+                <div class="col-12 p-0" style="height: auto; width:fit-content">
+                    {{p.description|safe}}
+                </div>
+                
+            
+            </div> <!-- card-body.// -->
+        </article> <!-- card.// -->
+        
+        <!-- PRODUCT DETAIL .// -->
+        
+        </div> <!-- col // -->
+        <aside class="col-xl-3 col-md-4 col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                Trade Assurance
+            </div>
+            <div class="card-body small">
+                <a href="{%url 'shop:shopProduct' p.from_shop.id%}">
+                <img src="{{p.from_shop.image.url}}" alt="" srcset="" style="height: 30%; width:100%;">
+                </a>
+                 <span>{{p.from_shop.shop_name}} | Added by: {{p.added_by.first_name}}</span> 
+                 <hr>
+                 Tags:<br>
+                 
+                 {% for t in p.tags.all  %}
+                    <div class="badge badge-dark">
+                        {{t}}
+                    </div> 
+                 {% endfor %}       
+                 <hr>
+                 Total Products From This Shop- <b> {{count}}</b><br>        
+                 <hr>
+                 <a href="{%url 'shop:shopProduct' p.from_shop.id%}">Visit Shop</a>      
+            </div> <!-- card-body.// -->
+        </div> <!-- card.// -->
+        
+    </div> <!-- row.// -->
+</div>
+<div class="container-fluid">
+    <div class="row p-2">
+
+        <div class="col-12 ">
+            <h6>Similar Products</h6>
+        </div>
+        <div class="row">
+
+        </div>
+            {% for c in similar_product  %}
+            <div class="col-lg-2 col-xlg-2 col-md-3 col-6 p-2">
+                <a href="{{ c.get_absolute_url }}">
+                    <div class="white-box">
+                        <a href="{{ c.get_absolute_url }}">
+                            <div class="user-bg" style="height: 100px;"> <img class="m-auto" alt="user" src="{%if c.image%}{{c.image.url}}{%else%}{%static 'images/posts/5.jpg'%}{%endif%}">
+                            </div>
+                        </a>
+                        
+                        <hr>
+                        <figcaption class="info-wrap pl-3 pb-2">
+                            <p class="title text-truncate p-0 m-0">{{c.name|capfirst}}</p>
+                            <small class="text-muted p-0 m-0">Sizes: S, M, XL</small>
+                            <div class="price mt-1">Rs.{{c.price}}</div> <!-- price-wrap.// -->
+                        </figcaption>
+                        
+                    </div>
+                </a>
+            </div>
+            {% endfor %} 
+    </div>
+</div>
+
+<script>
+    function changeImg(a) {
+    document.getElementById("changeImage").src = a.src;
+    }
+</script>
+{% endblock content %}
