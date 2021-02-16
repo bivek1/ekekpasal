@@ -45,6 +45,7 @@
     width:100%;
 }
 </style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <section class="section-main bg padding-y-sm">
         <div class=container>
             <div class="row">
@@ -151,9 +152,9 @@
         <hr>
         <h6 class="mt-2">Products</h6>
         <hr>
-        <div class="row">   
+        <div class="row infinite-container">   
         {% for c in product  %}
-        <div class="col-lg-2 col-xlg-2 col-md-3 col-6">
+        <div class="col-lg-2 col-xlg-2 col-md-3 col-6 infinite-item">
             <a href="{{c.get_absolute_url}}" style="color: black;">
                 <div class="white-box p-3 mb-3">
                     <div class="user-bg" style="height: 100px;"> <img class="m-auto" alt="user" src="{%if c.image%}{{c.image.url}}{%else%}{%static 'images/posts/5.jpg'%}{%endif%}">
@@ -172,6 +173,51 @@
                 
           </div>
     </div>
-    
+    <div class="container">
+        <div class="d-flex d-none position-fixed" style="top:35vh;left:46vw">
+                <button class="btn btn-dark loading">
+                    <span class= "spinner-border spinner-border-sm"></span>
+                    Please Wait...
+                </button>
+        </div>
+        <div class="row">
+            <!-- <div class="col-md-12 col-xs-12">
+                
+                {% if product.has_previous %}
+                <a href="?page={{product.previous_page_number}}">
+                    <button class="btn btn-danger" type="submit">Previous</button>
+                </a>
+                {% endif %}
 
+            </div>
+            <div class="col-md-4 col-xs-4">
+                <h5 class="text-center">Page: {{product.number}} of {{product.paginator.num_pages}}</h5>
+            </div> -->
+           
+            <div class="col-md-12 col-xs-12">
+                {%if product.has_next%}
+                    <a class="infinite-more-link" href="?page={{product.next_page_number}}">
+                    </a>
+                {%endif%}    
+            </div>
+        </div>
+    </div>
+    <script src="{%static 'js/jquery.waypoints.min.js'%}"></script>
+    <script src="{%static 'js/infinite.min.js'%}"></script>
+
+    <script>
+        $('.loading').hide();
+        var infinite = new Waypoint.Infinite({
+            element: $('.infinite-container')[0],
+
+            offset: 'bottom-in-view',
+
+            onBeforePageLoad: function(){
+                $('.loading').show();
+            },
+            onAfterPageLoad: function(){
+                $('.loading').hide();
+            }
+        });
+    </script>
 {% endblock content %}

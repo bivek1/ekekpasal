@@ -6,16 +6,27 @@ from django.contrib import messages
 from .models import Category, Sub_Category, Service, Product, Shop
 from shop.models import CustomUser
 from django.core.mail import message
+from django.core.paginator import Paginator
 
 # Create your views here.
 def homepage(request):
     service = Service.objects.all()
     shop = Shop.objects.all()
     product = Product.objects.all()
+    paginator = Paginator(product, 12)
+    page = request.GET.get('page')
+    print(page)
+    try:
+        aa = int(page)
+    except:
+        aa = 1
+    print(type(aa))
+    print(type(page))
+    memData = paginator.page(aa)
     dist = {
         'service':service,
         'shop':shop,
-        'product':product,
+        'product':memData,
         'category':Category.objects.all()
     }
     return render(request, 'shop/index.html', dist)
