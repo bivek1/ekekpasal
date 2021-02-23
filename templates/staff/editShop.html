@@ -1,0 +1,74 @@
+{% extends base %}
+{% block title %}
+  Edit Shop {{s.shop_name}}
+{% endblock title %}
+{% block header %}
+{%endblock%}
+{% block mainDasboard %}
+            
+  
+<div class="container-fluid">
+  {% if messages %}
+  {%for m in messages%}
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <strong>Great!</strong> {{m}}
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  {%endfor%}
+  {% endif %}
+  <div class="row">
+    <div class="col-md-12">
+        <div class="white-box">
+          <h4>Edit Shop {{s.shop_name}}</h4>
+          <small>
+            Edit shop {{s.shop_name}}
+          </small>
+          
+          <form action="" method="post" enctype="multipart/form-data">
+            <div class="row mt-3">
+              <div class="col-md-4 col-12">
+                {{form.shop_name.label_tag}}
+                {{form.shop_name}}
+                {{form.shop_name.errors}}
+              </div>
+              <div class="col-md-4 col-12">
+                {{form.service_provide.label_tag}}
+                {{form.service_provide}}
+                {{form.service_provide.errors}}
+              </div>
+              <div class="col-md-4 col-12">
+                {{form.VAT.label_tag}}
+                {{form.VAT}}
+                {{form.VAT.errors}}
+              </div>
+              <div class="col-md-6 col-12">
+                {{form.address.label_tag}}
+                {{form.address}}
+                {{form.address.errors}}
+              </div>
+              <div class="col-md-6 col-12">
+                {{form.shop_number.label_tag}}
+                {{form.shop_number}}
+                {{form.shop_number.errors}}
+              </div>
+              <div class="col-12 col-md-8">
+                {{form.image.label_tag}}
+                {{form.image}}
+                {{form.image.errors}}
+              </div>
+              <div class="col-12 col-md-4 p-2">
+                <img src=" {%if s.image%}{{s.image.url}}{%else%}{%endif%}" style="height: 100px; width:200px;" alt="" srcset="">
+              </div>
+            </div>
+            <br>
+            {% csrf_token %}
+            <input class="btn btn-outline-dark" type="submit" value="Update Shop">
+          </form>
+        </div>
+    </div>
+</div>
+  
+</div>
+{% endblock mainDasboard %}

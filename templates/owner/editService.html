@@ -1,0 +1,55 @@
+
+{% extends 'owner/ownerDashboard.html' %}
+{% block title %}
+  Edit Service -{{s.service_name}}
+{% endblock title %}
+{% block header %}
+{%endblock%}
+{% block mainDasboard %}
+            
+  
+<div class="container-fluid">
+  {% if messages %}
+    {%for m in messages%}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+         {{m}}
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    {%endfor%}
+  {% endif %}
+  <div class="row">
+    <div class="col-md-12">
+        <div class="white-box">
+          <h4>Edit Service</h4>
+          <small>
+            Edit Service {{s.service_name}}
+          </small>
+          
+          <form action="" method="post" enctype="multipart/form-data">
+            <div class="row mt-3">
+                <div class="col-12 col-md-12 mt-2">
+                    <input type="text" name = "service_name" class="form-control", value = "{{s.service_name}}">
+                </div>
+
+                <div class="col-12 col-md-8 mt-2" > 
+                    <input type="file" class="form-control" name="image">
+                </div>
+                <div class="col-12 col-md-4 p-2">
+                    <img src=" {%if s.image%}{{s.image.url}}{%else%}{%endif%}" style="height: 100px; width:200px;" alt="" srcset="">
+                </div>
+            </div>
+              
+            {% csrf_token %}
+            <br>
+            <input class="btn btn-outline-dark " type="submit" value="Add Service">
+              
+
+          </form>
+        </div>
+    </div>
+</div>
+  
+</div>
+{% endblock mainDasboard %}

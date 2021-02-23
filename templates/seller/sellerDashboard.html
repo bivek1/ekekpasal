@@ -239,9 +239,19 @@
           <!-- ============================================================== -->
           {% block mainDasboard %}
             
-  
-          <div class="container-fluid">
+          
 
+              
+          <div class="container-fluid">
+            {% for s in shop  %}
+            {%if s.image %}
+            {%else%}
+            <small style = "color: red;">
+              Its seems that you have not added shop images for some of your shop. It may decrese your customer potential
+              <a href="{%url 'staff:yourShop'%}">Update Shop Image Now?</a>
+            </small>
+            {%endif%}
+            {% endfor %}
              <!-- RECENT SALES -->
               <!-- ============================================================== -->
               <div class="row">

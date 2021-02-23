@@ -44,13 +44,20 @@
                             {%endif%}
                         <p style="font-size: 16px;">{{c.number}} </p>
                         <p>{{c.street}}</p>
+                        <small class="d-block">Added by - {{c.added_by}}</small>
                         <div class="btn-group btn-group-sm">
-                            <button class="btn btn-primary">
-                                View
-                            </button>
-                            <button class="btn btn-warning">
-                                Edit
-                            </button>
+                            <a href="{%url 'owner:viewSeller' c.id%}">
+                                <button class="btn btn-primary">
+                                    View
+                                </button>
+                            </a>
+                           
+                            <a href="{%url 'owner:editSeller' c.id%}">
+                                <button class="btn btn-warning">
+                                    Edit
+                                </button>
+                            </a>
+                           
                     
                         </div>
                     </div>

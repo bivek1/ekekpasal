@@ -56,7 +56,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'chowk.LoginCheckMiddleware.LoginCheckMiddleWare',
+    # 'chowk.LoginCheckMiddleware.LoginCheckMiddleWare',
 ]
 
 ROOT_URLCONF = 'chowk.urls'

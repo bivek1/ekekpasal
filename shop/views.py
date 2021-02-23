@@ -10,8 +10,8 @@ from django.core.paginator import Paginator
 
 # Create your views here.
 def homepage(request):
-    service = Service.objects.all()
-    shop = Shop.objects.all()
+    service = Service.objects.all()[:6]
+    shop = Shop.objects.all()[:6]
     product = Product.objects.all()
     paginator = Paginator(product, 12)
     page = request.GET.get('page')
@@ -27,7 +27,8 @@ def homepage(request):
         'service':service,
         'shop':shop,
         'product':memData,
-        'category':Category.objects.all()
+        'category':Category.objects.all(),
+        'catee':Category.objects.all()[:6]
     }
     return render(request, 'shop/index.html', dist)
 
@@ -68,11 +69,16 @@ def signUp(request):
         passw2 = request.POST['password2']
         if passw == passw2:
             TypeOne = CustomUser.objects.create_user(email = email, username = email, password=passw, user_type = "3")
-            messages.success(request, "Sign Up sucessfull. Please Login")
-            return HttpResponseRedirect(reverse('shop:loginPage'))
-        else:
-            messages.error(request, "Password Does not match")
-            return render(request, "shop/register.html")
+            user = authenticate(request, username=email, password=passw)
+            print(user)
+            if user!= None:
+                login(request, user)
+                messages.success(request, "Sign Up sucessfull. Please Login")
+                return HttpResponseRedirect(reverse('customer:selectService'))
+                # return HttpResponseRedirect(reverse("customer:customerDashboard"))
+            else:
+                messages.error(request, "Invalid Login Credential")
+                return HttpResponseRedirect(reverse('shop:loginPage'))
     else:
         return render(request, "shop/register.html")
 
@@ -144,10 +150,12 @@ def shopProduct(request, id):
 def serviceProduct(request, id):
     service = Service.objects.get(id = id)
     product = Product.objects.filter(service = service)
+    shop = Shop.objects.filter(service_provide = service)[:6]
     dist = {
         'product': product,
         's':service,
-        'category':Category.objects.all()
+        'category':Category.objects.all(),
+        'shop':shop,
     }
     return render(request, "shop/serviceProduct.html", dist)
 

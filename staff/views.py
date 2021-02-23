@@ -1,7 +1,7 @@
 from django.shortcuts import render
-from .forms import categoryForm, subCategoryForm, shopForm, AddProductForm
+from .forms import categoryForm, subCategoryForm, shopForm, AddProductForm, editShopForm
 from django.contrib import messages
-from shop.models import Category, Sub_Category, Shop, Product, imageList, CustomUser
+from shop.models import Category, Sub_Category, Shop, Product, imageList, CustomUser, Service
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 # Create your views here.
@@ -156,3 +156,40 @@ def viewYourCategory(request):
         'base':base,
     }
     return render(request, 'staff/categoryList.html', dist)
+
+def editShop(request, id):
+    form = editShopForm(request.POST or None, request.FILES or None)
+    if request.user.user_type == '1':
+        base = 'owner/ownerDashboard.html'
+    else:
+        base = 'seller/sellerDashboard.html'
+    shop = Shop.objects.get(id = id)
+
+    form.fields['shop_name'].initial = shop.shop_name
+    form.fields['VAT'].initial = shop.VAT
+    form.fields['service_provide'].initial = shop.service_provide
+    form.fields['address'].initial = shop.address
+    form.fields['shop_number'].initial = shop.shop_number
+    dist = {
+        's':shop,
+        'base':base,
+        'form':form,
+    }
+    if form.is_valid():
+        cd = form.cleaned_data
+        shop.shop_name = cd['shop_name']
+        shop.VAT = cd['VAT']
+        shop.service_provide = Service.objects.get(id = cd['service_provide'])
+        shop.address = cd['address']
+        shop.number = cd['shop_number']
+        image = cd['image']
+        if request.FILES.get('image', False):
+            shop.image = request.FILES['image']
+            shop.save()
+        else:
+            shop.save()
+
+        messages.success(request, "Sucessfully Updated Shop")
+        return HttpResponseRedirect(reverse('staff:editShop', args=[shop.id]))
+
+    return render(request, 'staff/editShop.html', dist)

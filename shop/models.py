@@ -115,21 +115,12 @@ class Seller(models.Model):
     verified = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add= True)
     updated_at = models.DateTimeField(auto_now_add=True)
+    added_by = models.CharField(max_length = 200)
     objects = models.Manager()
     
     def __str__(self):
         return self.admin.first_name
 
-class Shop(models.Model):
-    shop_owner = models.ForeignKey(CustomUser, on_delete= models.CASCADE)
-    shop_name = models.CharField(max_length = 200)
-    VAT = models.CharField(max_length = 300)
-    address = models.CharField(max_length = 200)
-    image = models.ImageField(upload_to ="shop_picture", blank=True)
-    shop_number = models.BigIntegerField()
-    objects = models.Manager()
-    def __str__(self):
-        return self.shop_name
     
 class Customer(models.Model):
     id = models.AutoField(primary_key = True)
@@ -162,10 +153,24 @@ class Service(models.Model):
     def save(self, *args, **kwargs):
         if not self.id:
             self.slug = slugify(self.service_name)
+        else:
+            self.slug = slugify(self.service_name)
         super(Service, self).save(*args, **kwargs)
     
     # def get_absolute_url(self):
     #     return reverse("shop:product_list_by_services", kwargs={"pk": self.pk})
+    
+class Shop(models.Model):
+    shop_owner = models.ForeignKey(CustomUser, on_delete= models.CASCADE)
+    shop_name = models.CharField(max_length = 200)
+    VAT = models.CharField(max_length = 300)
+    service_provide = models.ForeignKey(Service, on_delete=models.CASCADE, default = 1)
+    address = models.CharField(max_length = 200)
+    image = models.ImageField(upload_to ="shop_picture", blank=True)
+    shop_number = models.BigIntegerField()
+    objects = models.Manager()
+    def __str__(self):
+        return self.shop_name
     
 class Category(models.Model):
     name = models.CharField(max_length = 200, db_index = True) 
@@ -282,7 +287,14 @@ class imageList(models.Model):
     
     def __str__(self):
         return self.product_id.name
-        
+  
+class userService(models.Model):
+    admin = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    service = models.ForeignKey(Service, on_delete=models.CASCADE)    
+class userInterest(models.Model):
+    admin = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete = models.CASCADE) 
+    
 class Delivery(models.Model):
     id = models.AutoField(primary_key = True)
     admin = models.OneToOneField(CustomUser, on_delete=models.CASCADE)

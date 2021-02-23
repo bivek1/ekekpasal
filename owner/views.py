@@ -6,6 +6,7 @@ from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from .forms import SellerForm, OwnerEditForm
+from seller.forms import sellerEditForm
 
 # Create your views here.
 def AdminDashboard(request):
@@ -17,9 +18,11 @@ def AdminDashboard(request):
     sub = Sub_Category.objects.all().count()
     time = date.today()
     visit = totalVisit.objects.all().count()
+    shop = Shop.objects.filter(shop_owner = request.user)
     dist = {
         'time':time,
         'pt':PT,'st':ST,'set':SeT, 'sh':SH, 'cat':cat, 'sub':sub, 'visit':visit,
+        'shop': shop,
     }
     return render(request, "owner/ownerDashboard.html",dist)
 
@@ -67,6 +70,7 @@ def addSeller(request):
         TypeOne.seller.gender=gender
         TypeOne.seller.KYC = kyc
         TypeOne.seller.verified = True
+        TypeOne.seller.added_by = request.user.username
         TypeOne.seller.save()
         return HttpResponseRedirect(reverse('owner:sellerList'))
     else:
@@ -126,3 +130,103 @@ def yourProfile(request):
 def manageSite(request):
     return render(request, "owner/manageSite.html")
 
+def editService(request, id):
+    service = Service.objects.get(id = id)
+    dist = {
+        's':service
+    }
+    if request.method =='POST' or request.method == 'FILES':
+        try:
+            service.service_name = request.POST['service_name']
+            if request.FILES.get('image', False):
+                service.image = request.FILES['image']
+                service.save()
+            else:
+                service.save()
+            messages.success(request, "Sucessfully Updated Service")
+            return HttpResponseRedirect(reverse('owner:editService', args=[service.id]))
+        except:   
+            messages.success(request, "Something went Wrong")
+            return HttpResponseRedirect(reverse('owner:editService', args=[service.id]))
+    return render(request, "owner/editService.html", dist)
+
+
+def editSeller(request, id):
+    form = sellerEditForm()
+    real = Seller.objects.get(id = id)
+    form.fields['email'].initial = real.admin.email
+    form.fields['first_name'].initial = real.admin.first_name
+    form.fields['last_name'].initial = real.admin.last_name
+    form.fields['Temporary_address'].initial = real.Temporary_address
+    form.fields['number'].initial = real.number
+    form.fields['District'].initial = real.District
+    form.fields['street'].initial = real.street
+    form.fields['gender'].initial = real.gender
+    form.fields['KYC'].initial = real.KYC
+    
+    dist = {
+        'form':form,
+        's':real,
+    }
+   
+    if request.method == 'POST':
+        first_name = request.POST['first_name']
+        last_name = request.POST['last_name']
+        email = request.POST['email']
+        Temporary_address = request.POST['Temporary_address']
+        number = request.POST['number']
+        District = request.POST['District']
+        street = request.POST['street']
+        gender = request.POST['gender']
+        try:
+            kyc = request.FILES['KYC']
+        except:
+            kyc = None
+        
+        try:
+            match = CustomUser.objects.get(email=email)
+            if match.id == real.admin.id:
+                aa = CustomUser.objects.get(id = real.admin.id)
+                aa.first_name = first_name
+                aa.last_name = last_name
+                own = Seller.objects.get(admin=real.admin.id)
+                own.Temporary_address = Temporary_address
+                own.number = number
+                own.District = District
+                own.street = street
+                own.gender = gender
+                if kyc:
+                    own.KYC = kyc
+                else:
+                    pass
+                own.save()
+                aa.save()
+                messages.success(request, "Sucessfully updated Seller")
+                return HttpResponseRedirect(reverse('owner:editSeller' , args=[real.id]))
+            else:
+                messages.error(request, "This email is already Registered")
+                return render(request, "owner/editSeller.html", dist)
+        except:
+            aa = CustomUser.objects.get(id = real.admin.id)
+            aa.email = email
+            aa.save()
+            messages.success(request, "Sucessfully updated Email")
+            return HttpResponseRedirect(reverse('owner:editSeller', args=[real.id]))
+    else:
+        return render(request, "owner/editSeller.html", dist)
+
+def viewSeller(request, id):
+    seller = Seller.objects.get(id = id)
+    shop = Shop.objects.filter(shop_owner = seller.admin.id)
+    product = Product.objects.filter(added_by = seller.admin.id)
+    shop_count = Shop.objects.filter(shop_owner = seller.admin.id).count()
+    product_count = Product.objects.filter(added_by = seller.admin.id).count()
+    dist = {
+        's':seller,
+        'shop':shop,
+        'product':product,
+        'c':shop_count,
+        'p':product_count,
+    }
+    
+    return render(request, "owner/viewSeller.html", dist)

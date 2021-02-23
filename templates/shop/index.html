@@ -41,9 +41,41 @@
     transition: all 200ms ease-out;
 }
 .shop-image {
-    height: 150px; 
+    height: 130px; 
     width:100%;
 }
+.catBox{
+    height: auto;
+    background-color: white;
+    width: 100%;
+}
+.dropdownforMobile{
+    display: none;
+}
+.mobileService{
+    /* border: 1px solid rgb(158, 158, 158); */
+    background-color: white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    
+}
+.mobile-dropdown{
+    width: 100%;
+}
+.pleasewait{
+    top:50vh;left:45vw
+}
+@media only screen and (max-width:600px){
+    .dropdownforMobile{
+        display: block;
+    } 
+    .catBox{
+        display:none;
+    }
+    .pleasewait{
+        top:35vh;left:35vw
+    }
+}
+
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <section class="section-main bg padding-y-sm">
@@ -70,7 +102,52 @@
     <section class="section-main bg padding-y-sm">
         <div class=container>
             <div class="row">
-                <div class="col-12">
+                <div class="col-md-2 col-12">
+                  
+                    <div class="catBox p-3">
+                        Services Shortcut
+                        <hr>
+                        <div class="row">
+                            {%for c in service %}
+                            
+                                <div class="col-2 p-2">
+                                    <img src="{%if c.image %} {{c.image.url}}{%else%}{%static 'images/brand.png'%}{%endif%}"  style = "height: 30px; width:30px; border-radius: 50px; display:inline-flex; "alt="" srcset="">
+                                </div>
+                                <div class="col-10 p-2" style="border-bottom: 1px solid rgb(221, 221, 221);">
+                                    <a class="dropdown-item" href="#">{{c}} </a>
+                                </div>
+                            {%endfor%}
+                        </div>
+                    </div>
+                    <div class="dropdown dropdownforMobile"> 
+                        <div class="mobileService" class="btn btn-secondary dropdown-toggle" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <div class="row p-2">
+                                <div class="col-10" style="font-family:  sans-serif monospace;">
+                                    Services Shortcut
+                                </div>
+                                <div class="col-2 text-center">
+                                    <i class="fa fa-plus"></i>
+                                </div>
+                            </div>
+                        </div>
+                            
+                        <div class="dropdown-menu mobile-dropdown" aria-labelledby="dropdownMenuButton1">
+                            {%for c in service %}
+                            <div class="row p-1">
+                                <div class="col-2 pr-3">
+                                    <img src="{%if c.image %} {{c.image.url}}{%else%}{%static 'images/brand.png'%}{%endif%}"  style = "height: 30px; width:30px; border-radius: 50px; display:inline-flex; "alt="" srcset="">
+                                </div>
+                                <div class="col-10">
+                                    <a class="dropdown-item" href="#">{{c}} </a>
+                                </div>
+                            </div>
+                            {%endfor%}
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-10 col-12">
+                    <br>
                     <h5 style="font-family: sans-serif; display:inline-block">View Products From Your Favorite Shop </h5>
                     <hr>
                     <div class="row">
@@ -82,7 +159,7 @@
                                     <figure class="text-center">
                                         <figcaption class="p-2">
                                         <p class="title" style="font-size: 13px;"> <b>{{s.shop_name|capfirst|truncatewords:3}}</b></p>
-                                        <small class="p-0 m-0 d-block">{{s.address|capfirst}}</small> 
+                                        <small class="p-0 m-0 d-block">{{s.address|capfirst|truncatewords:2}}</small> 
                                         <small class="p-0 m-0">{{s.shop_number}}</small> 
                                         </figcaption>
                                     </figure> <!-- iconbox // -->
@@ -111,7 +188,7 @@
         <div class=container>
             <div class="row">
                 <div class="col-12">
-                    <h5 style="font-family: sans-serif; display:inline-block">Or Else Shop by Services </h5>
+                    <h5 style="font-family: sans-serif; display:inline-block">Services </h5>
                     <hr>
                 </div>
             </div>
@@ -126,7 +203,7 @@
                             <img src="{%if s.image%}{{s.image.url}}{%else%}{%static 'images/posts/5.jpg'%}{%endif%}" alt="" srcset="" style="height:100px; width:100px;">
                             <figcaption class="pt-4">
                             <h6 class="title">{{s.service_name}}</h6>
-                            <p>Service Provider- <small>ekek Pasal</small> </p> 
+                            <small>ekek <b>Pasal</b></small> 
                             </figcaption>
                         </figure> <!-- iconbox // -->
                     </article> <!-- panel-lg.// -->
@@ -174,7 +251,7 @@
           </div>
     </div>
     <div class="container">
-        <div class="d-flex d-none position-fixed" style="top:35vh;left:46vw">
+        <div class="d-flex d-none position-fixed text-center pleasewait" >
                 <button class="btn btn-dark loading">
                     <span class= "spinner-border spinner-border-sm"></span>
                     Please Wait...

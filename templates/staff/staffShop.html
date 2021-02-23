@@ -19,7 +19,11 @@
       transition: all 200ms ease-out;
   }
   .makeShop{
-      height:110px;
+      height:160px;
+  }
+  .shop-image {
+      height: 130px; 
+      width:100%;
   }
 </style>
   
@@ -44,22 +48,28 @@
       </div>
         
         {% for s in shop  %}
-        
         <div class="col-md-3 col-6 p-2">
           <a href="{%url 'shop:shopProduct' s.id%}" style="color: black;">
           <img  class="m-auto" src="{%if s.image%}{{s.image.url}}{%else%}{%static 'images/posts/5.jpg'%}{%endif%}" alt="" style="height: 50%; width:100%;">
+         
           <article class="card card-body makechange makeShop">
               <figure class="text-center">
-                  
                   <!-- <img src="{%if s.image%}{{s.image.url}}{%else%}{%static 'images/posts/5.jpg'%}{%endif%}" alt="" srcset="" style="height:100px; width:100px;"> -->
                   <figcaption class="p-0">
                   <p class="title p-0 m-0" style="font-size: 13px;"> <b>{{s.shop_name|capfirst|truncatewords:3}}</b></p>
                   <small class="p-0 m-0 d-block">{{s.address|capfirst}}</small> 
-                  <small class="p-0 m-0">{{s.shop_number}}</small> 
+                  <small class="p-0 m-0 d-block">{{s.shop_number}}</small> 
+                  <hr>
+                  <a href="{%url 'staff:editShop' s.id%}">
+                    <div class="btn btn-sm btn-primary">
+                      <i class="fa fa-edit"></i> Edit
+                    </div>
+                  </a>
                   </figcaption>
-              </figure> <!-- iconbox // -->
+              </figure> <!-- iconbox // -->  
           </article> <!-- panel-lg.// -->
         </a>
+          
         </div>
      
         {% endfor %}

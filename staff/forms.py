@@ -83,6 +83,7 @@ class shopForm(forms.ModelForm):
             'address',
             'shop_number',
             'image',
+            'service_provide',
         )
         labels = {
             'shop_name': "Shop Name",
@@ -90,14 +91,32 @@ class shopForm(forms.ModelForm):
             'address': "Address of the Shop",
             'shop_number': "Shop Number/Vendor Number",
             'image':'Image of Shop',
+            'service_provide':'Service of the Shop',
         }
         widgets = {
             'shop_name':forms.TextInput(attrs={'class':"form-control", "placeholder":"Shop Name"}),
             'VAT':forms.TextInput(attrs={'class':"form-control", "placeholder":"VAT or PAN Number"}),
             'address':forms.TextInput(attrs={'class':"form-control", "placeholder":"Address"}),
             'shop_number':forms.NumberInput(attrs={'class':"form-control", "placeholder":"Shop Number"}),
-            'image':forms.FileInput(attrs={'class':"form-control"})
+            'image':forms.FileInput(attrs={'class':"form-control"}),
+            'service_provide':forms.Select(attrs={'class':'form-control'})
         }
+class editShopForm(forms.Form):
+    shop_name = forms.CharField(max_length= 200, label = "Shop Name", widget= forms.TextInput(attrs={'class':'form-control', 'placeholder':'Shop Name'}))
+    VAT = forms.CharField(max_length = 200, label = "VAT", widget = forms.TextInput(attrs= {'class':'form-control', 'placeholder':'VAT/ PAN No.'}))
+    address = forms.CharField(max_length = 200, label = "Address", widget = forms.TextInput(attrs= {'class':'form-control', 'placeholder':'Shop Address'}))
+    image = forms.ImageField(max_length = 200, label = "Image", widget = forms.FileInput(attrs= {'class':'form-control', 'placeholder':'Shop Address'}))
+    shop_number = forms.CharField(max_length = 10, label = "Shop Number", widget = forms.NumberInput(attrs={'class':'form-control', 'placeholder':'Shop Number'}))
+    service = []
+    ser = Service.objects.all()
+    try:
+        for s in ser:
+            cat = (s.id , s.service_name)   
+            service.append(cat) 
+    except:
+        service = []
+    service_provide = forms.ChoiceField(label = "Service of Shop", choices =  service, widget = forms.Select(attrs= {'class':'form-control'}))
+
 
 class AddProductForm(forms.ModelForm):
     class Meta:

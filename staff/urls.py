@@ -11,5 +11,6 @@ urlpatterns = [
     path('yourshop', views.yourShop, name = 'yourShop'),
     path('viewYourCategory', views.viewYourCategory, name = 'viewYourCategory'),
     path('YourProduct', views.viewYourProduct, name="yourProduct"),
+    path('edit/<int:id>', views.editShop, name="editShop"),
 
 ]

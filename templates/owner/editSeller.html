@@ -1,0 +1,105 @@
+
+{% extends 'owner/ownerDashboard.html' %}
+{% block title %}
+  Edit Seller {{s.admin.first_name}}
+{% endblock title %}
+{% block header %}
+{%endblock%}
+{% block mainDasboard %}
+            
+<style>
+.errorlist{
+  list-style-type: none;
+  color: red;
+  padding: 0px;
+  margin: 0px;
+  font-size: 13px;
+  }
+ul, li {
+  list-style-type: none;
+}
+</style>
+<div class="container-fluid">
+    {% if messages %}
+        {%for m in messages%}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{m}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        {%endfor%}
+    {% endif %}
+  <div class="row">
+    <div class="col-md-12">
+        <div class="white-box">
+          <h4>Edit Seller</h4>
+          <small>
+            Edit Seller {{s.admin.first_name}} {{s.admin.last_name}}
+          </small>
+          
+          <form action="" method="post" enctype="multipart/form-data">
+            <div class="form-group mt-3">
+              <div class="form-row p-2" style="background-color: white;">
+                <div class="form-group col-md-6 col-4">
+                    {{form.first_name.label_tag}}
+                    {{form.first_name}}
+                    {{form.first_name.errors}}
+                </div>
+                <div class="form-group col-md-6 col-8">
+                    {{form.last_name.label_tag}}
+                    {{form.last_name}}
+                    {{form.last_name.errors}}
+                </div>
+                <div class="form-group col-md-6 col-6 ">
+                  {{form.email.label_tag}}
+                  {{form.email}}
+                  {{form.email.errors}}
+              </div>
+              <div class="form-group col-md-6 col-6">
+                  {{form.number.label_tag}}
+                  {{form.number}}
+                  {{form.number.errors}}
+              </div>
+                <div class="form-group col-md-6 col-6">
+                    {{form.District.label_tag}}
+                    {{form.District}}
+                    {{form.District.errors}}
+                </div>
+                <div class="form-group col-md-6 col-6">
+                    {{form.Temporary_address.label_tag}}
+                    {{form.Temporary_address}}
+                    {{form.Temporary_address.errors}}
+                </div>
+                <div class="form-group col-md-6 col-6">
+                    {{form.street.label_tag}}
+                    {{form.street}}
+                    {{form.street.errors}}
+                </div>
+                <div class="form-group col-md-6 col-6">
+                    {{form.gender.label_tag}}
+                    {{form.gender}}
+                    {{form.gender.errors}}
+                </div>
+                <div class="form-group col-md-3 col-3">
+                    {{form.KYC.label_tag}}
+                    <img src="{%if s.KYC%}{{s.KYC.url}} {%else%} {%endif%} " alt="" srcset="" style="height: 100px; width:100px;">
+                </div>
+                <div class="form-group col-md-9 col-9 mt-4">
+                    {{form.KYC}}
+                    {{form.KYC.errors}}
+                </div>
+    
+                {% csrf_token %}
+                <button class="btn btn-outline-dark col-6" type="submit">
+                    Update Seller
+                </button>
+            </div>
+            </div>
+          </form>
+        </div>
+    </div>
+</div>
+  
+</div>
+{% endblock mainDasboard %}

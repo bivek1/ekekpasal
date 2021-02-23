@@ -163,7 +163,7 @@
             </div>
             <div class="card-body small">
                 <a href="{%url 'shop:shopProduct' p.from_shop.id%}">
-                <img src="{{p.from_shop.image.url}}" alt="" srcset="" style="height: 30%; width:100%;">
+                <img src="{%if p.from_shop.image%}{{p.from_shop.image.url}} {%else%} {%static 'images/brand.png'%} {%endif%}" alt="" srcset="" style="height: 30%; width:100%;">
                 </a>
                  <span>{{p.from_shop.shop_name}} | Added by: {{p.added_by.first_name}}</span> 
                  <hr>

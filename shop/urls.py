@@ -15,4 +15,5 @@ urlpatterns = [
     path('categorywise/<int:id>', views.categoryProduct, name ="categoryProduct"),
     path('loginpage', views.loginPage, name = "loginPage"),
     path('registerpage', views.signUp, name = "signup"),
+
 ]

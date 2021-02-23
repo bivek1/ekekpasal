@@ -45,7 +45,12 @@
                     <img src="{%if s.image%}{{s.image.url}}{%else%}{%static 'images/posts/5.jpg'%}{%endif%}" alt="" srcset="" style="height:100px; width:100px;">
                     <figcaption class="pt-4">
                     <h6 class="title">{{s.service_name}}</h6>
-                    <p>Service Provider- <small>Digital Chowk</small> </p> 
+                    <p>Service Provider- <small>ekekPasal</small> </p> 
+                    <a href="{%url 'owner:editService' s.id%}">
+                      <button class="btn btn-primary btn-sm">
+                        <i class="fa fa-edit"></i> Edit
+                      </button>
+                    </a>
                     </figcaption>
                 </figure> <!-- iconbox // -->
             </article> <!-- panel-lg.// -->

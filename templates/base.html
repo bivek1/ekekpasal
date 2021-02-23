@@ -66,6 +66,9 @@ $(document).ready(function() {
 		text-align: center;
 		float: left;
 	}
+	.show-category{
+		display: none;
+	}
 }
 </style>
 {% block customstyle %}
@@ -134,7 +137,7 @@ $(document).ready(function() {
 <section class="header-main shadow-sm">
 	<div class="container">
 <div class="row-sm align-items-center">
-	<div class="col-lg-4-24 col-sm-3">
+	<div class="col-lg-4-24 col-sm-12 show-category">
 	<div class="category-wrap dropdown py-1">
 		<button type="button" class="btn btn-dark  dropdown-toggle" data-toggle="dropdown" ><i class="fa fa-bars"></i> Categories</button>
 		<div class="dropdown-menu">
@@ -148,10 +151,9 @@ $(document).ready(function() {
 			<form action="#" class="py-1">
 				<div class="input-group w-100">
 					<select class="custom-select"  name="category_name">
-						<option value="">All type</option>
-						<option value="">Special</option>
-						<option value="">Only best</option>
-						<option value="">Latest</option>
+						{%for c in category%}
+						<option value="">{{c}}</option>
+						{%endfor%}
 					</select>
 				    <input type="text" class="form-control" style="width:50%;" placeholder="Search">
 				    <div class="input-group-append">
@@ -272,7 +274,7 @@ $(document).ready(function() {
 </div> <!-- container.// -->
 </section> <!-- header-main .// -->
 </header> <!-- section-header.// -->
-	{% endblock header %}
+{% endblock header %}
 
 
 {% block content %}

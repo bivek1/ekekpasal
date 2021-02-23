@@ -3,14 +3,16 @@ from datetime import date
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from shop.models import CustomUser, Seller
+from shop.models import CustomUser, Seller, Shop
 from .forms import sellerEditForm
 
 # Create your views here.
 def sellerDashboard(request):
     time = date.today()
+    shop = Shop.objects.filter(shop_owner = request.user)
     dist = {
         'time':time,
+        'shop':shop,
     }
     return render(request, 'seller/sellerDashboard.html', dist)
 
